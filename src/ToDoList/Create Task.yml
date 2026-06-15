@@ -1,0 +1,28 @@
+info:
+  name: Create Task
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/api/v1.0/tasks
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Learn Kafka",
+        "description": "Complete Kafka integration",
+        "status": "PENDING",
+        "priority": "HIGH",
+        "dueDate": "2026-06-30"
+      }
+  auth:
+    type: basic
+    username: admin
+    password: ca835cd9-5ead-4853-965a-215343e48620
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
