@@ -17,6 +17,7 @@ export class TaskListComponent implements OnInit {
   @Output() completeTask = new EventEmitter<Task>();
 
   tasks: Task[] = [];
+  searchTerm = '';
 
   constructor(private taskService: TaskService) {}
 
@@ -34,6 +35,29 @@ export class TaskListComponent implements OnInit {
 
   completeTaskClicked(task: Task): void {
     this.completeTask.emit(task);
+  }
+
+  onSearch(): void {
+    const query = this.searchTerm.trim();
+    if (!query) {
+      this.loadTasks();
+      return;
+    }
+
+    this.taskService.searchTasks({ title: query }).subscribe({
+      next: (data: Task[]) => {
+        this.tasks = data;
+        console.log('Search results:', data);
+      },
+      error: (err: any) => {
+        console.error('Error searching tasks', err);
+      }
+    });
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.loadTasks();
   }
 
   deleteTaskClicked(task: Task): void {
