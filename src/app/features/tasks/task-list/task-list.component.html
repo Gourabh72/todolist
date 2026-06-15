@@ -1,0 +1,48 @@
+<style>
+  @import './task-list.component.scss';
+</style>
+<div class="task-container">
+  <div class="header">
+    <h2>Task Manager</h2>
+    <button class="add-btn" (click)="addTaskClicked()">
+      + Add Task
+    </button>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>
+            <span class="status-badge pending">
+              {{ task.status }}
+            </span>
+          </td>
+          <td>
+            <span class="priority-badge high">
+              {{ task.priority }}
+            </span>
+          </td>
+          <td>{{ task.dueDate }}</td>
+          <td class="actions">
+            <button class="edit-btn" *ngIf="task.status !== 'COMPLETED'" (click)="editTaskClicked(task)">Edit</button>
+            <button class="delete-btn" (click)="deleteTaskClicked(task)">Delete</button>
+            <button class="complete-btn" *ngIf="task.status !== 'COMPLETED'" (click)="completeTaskClicked(task)">Complete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
