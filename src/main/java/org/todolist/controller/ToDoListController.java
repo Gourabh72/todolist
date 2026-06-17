@@ -65,6 +65,12 @@ public class ToDoListController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/tasks")
+    public ResponseEntity<Void> deleteTasks(@RequestBody List<String> ids) {
+        service.deleteTasks(ids);
+        return ResponseEntity.noContent().build();
+    }
+
     // Mark Complete
     @PatchMapping("/tasks/{id}/complete")
     public ResponseEntity<Task> markComplete(@PathVariable String id) {

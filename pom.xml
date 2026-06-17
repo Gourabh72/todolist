@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.example</groupId>
-    <artifactId>ToDOList</artifactId>
+    <artifactId><![CDATA[todolist-web-rest]]></artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -28,14 +28,14 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security-->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
         <version>4.0.2</version>
         <scope>compile</scope>
-    </dependency>-->
-   <!-- <dependency>
+    </dependency>
+   <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-api</artifactId>
         <version>0.11.5</version>
@@ -45,13 +45,13 @@
         <artifactId>jjwt-impl</artifactId>
         <version>0.11.5</version>
         <scope>runtime</scope>
-    </dependency>-->
-    <!--<dependency>
+    </dependency>
+    <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-jackson</artifactId>
         <version>0.11.5</version>
         <scope>runtime</scope>
-    </dependency>-->
+    </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-mongodb</artifactId>

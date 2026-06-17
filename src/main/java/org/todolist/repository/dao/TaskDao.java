@@ -59,6 +59,14 @@ public class TaskDao {
         repository.deleteById(id);
     }
 
+    public void deleteAllById(List<String> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        // Use the repository method with correct name
+        repository.deleteAllById(ids);
+    }
+
     public List<Task> search(String title,
                              TaskStatus status,
                              Priority priority,

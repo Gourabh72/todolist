@@ -21,6 +21,13 @@ public class ToDoListService {
         this.taskDao = taskDao;
     }
 
+    public void deleteTasks(List<String> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        taskDao.deleteAllById(ids);
+    }
+
     // Create Task
     public Task createTask(Task task) {
         return taskDao.save(task);

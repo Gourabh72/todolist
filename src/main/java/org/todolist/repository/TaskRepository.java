@@ -16,5 +16,6 @@ public interface TaskRepository extends MongoRepository<Task, String> {
     List<Task> findByPriority(Priority priority);
 
     List<Task> findByTitleContainingIgnoreCase(String title);
+
 }
 
