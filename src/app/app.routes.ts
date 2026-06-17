@@ -3,7 +3,7 @@ import { TaskFormComponent } from './features/tasks/task-form/task-form.componen
 
 export const routes: Routes = [
   {
-    path: 'tasks/new',
+    path: 'tasks',
     component: TaskFormComponent
   }
 ];
