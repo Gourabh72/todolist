@@ -18,6 +18,7 @@ export class TaskListComponent implements OnInit {
 
   tasks: Task[] = [];
   searchTerm = '';
+  selectedTasks = new Set<string>();
 
   constructor(private taskService: TaskService) {}
 
@@ -58,6 +59,62 @@ export class TaskListComponent implements OnInit {
   clearSearch(): void {
     this.searchTerm = '';
     this.loadTasks();
+  }
+
+  toggleTaskSelection(task: Task): void {
+    if (!task.id) return;
+    if (this.selectedTasks.has(task.id)) {
+      this.selectedTasks.delete(task.id);
+    } else {
+      this.selectedTasks.add(task.id);
+    }
+  }
+
+  selectAll(): void {
+    this.tasks.forEach(task => {
+      if (task.id) {
+        this.selectedTasks.add(task.id);
+      }
+    });
+  }
+
+  toggleSelectAll(): void {
+    const allSelected = this.selectedTasks.size === this.tasks.length && this.tasks.length > 0;
+    if (allSelected) {
+      this.clearAll();
+    } else {
+      this.selectAll();
+    }
+  }
+
+  clearAll(): void {
+    this.selectedTasks.clear();
+  }
+
+  deleteSelectedTasks(): void {
+    if (this.selectedTasks.size === 0) {
+      alert('Please select tasks to delete');
+      return;
+    }
+
+    const confirmed = window.confirm(`Are you sure you want to delete ${this.selectedTasks.size} selected task(s)?`);
+    if (!confirmed) {
+      return;
+    }
+
+    const ids = Array.from(this.selectedTasks);
+    console.log('Deleting tasks with IDs:', ids);
+    this.taskService.deleteTasks(ids).subscribe({
+      next: () => {
+        console.log('Successfully deleted selected tasks');
+        this.selectedTasks.clear();
+        this.loadTasks();
+      },
+      error: (err: any) => {
+        console.error('Error deleting selected tasks:', err);
+        alert('Failed to delete tasks. Please try again.');
+      }
+    });
   }
 
   deleteTaskClicked(task: Task): void {

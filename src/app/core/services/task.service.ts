@@ -40,6 +40,14 @@ export class TaskService {
     );
   }
 
+  deleteTasks(ids: string[]): Observable<void> {
+    return this.http.request<void>(
+      'DELETE',
+      this.API,
+      { body: ids }
+    );
+  }
+
   markComplete(id: string): Observable<Task> {
     return this.http.patch<Task>(
       `${this.API}/${id}/complete`,

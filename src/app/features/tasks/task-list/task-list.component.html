@@ -20,10 +20,18 @@
     <button class="clear-btn" *ngIf="searchTerm" (click)="clearSearch()">Clear</button>
   </div>
 
+  <div *ngIf="selectedTasks.size > 0" class="bulk-actions">
+    <span>{{ selectedTasks.size }} task(s) selected</span>
+    <button class="select-all-btn" *ngIf="selectedTasks.size < tasks.length" (click)="selectAll()">Select All</button>
+    <button class="delete-all-btn" (click)="deleteSelectedTasks()">Delete All</button>
+    <button class="clear-all-btn" (click)="clearAll()">Clear All</button>
+  </div>
+
   <div class="table-card">
     <table>
       <thead>
         <tr>
+          <th><input type="checkbox" [checked]="selectedTasks.size === tasks.length && tasks.length > 0" (change)="toggleSelectAll()" [indeterminate]="selectedTasks.size > 0 && selectedTasks.size < tasks.length" /></th>
           <th>Title</th>
           <th>Description</th>
           <th>Status</th>
@@ -34,6 +42,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let task of tasks">
+          <td><input type="checkbox" [checked]="selectedTasks.has(task.id ?? '')" (change)="toggleTaskSelection(task)" /></td>
           <td>{{ task.title }}</td>
           <td>{{ task.description }}</td>
           <td>
