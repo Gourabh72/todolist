@@ -4,6 +4,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
 import org.todolist.repository.DbUserRepository;
 import org.todolist.repository.entity.DbUser;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@Repository
 public class UserDao {
     private final DbUserRepository repository;
     private final MongoTemplate mongoTemplate;

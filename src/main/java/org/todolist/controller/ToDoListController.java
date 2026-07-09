@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.todolist.common.AppAllowed;
 import org.todolist.repository.entity.Priority;
 import org.todolist.repository.entity.Task;
 import org.todolist.repository.entity.TaskStatus;
@@ -15,9 +16,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1.0")
+@AppAllowed(property = "todo-list.app.allowed")
 public class ToDoListController {
 
     private final ToDoListService service;
@@ -28,9 +30,9 @@ public class ToDoListController {
 
     // Create Task
     @PostMapping("/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task created = service.createTask(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<String> createTask(@RequestBody Task task) {
+//        Task created = service.createTask(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Task created successfully");
     }
 
     // Get All Tasks
@@ -121,3 +123,5 @@ public class ToDoListController {
         return ResponseEntity.ok(result);
     }
 }
+
+
