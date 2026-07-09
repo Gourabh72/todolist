@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 import { TaskService } from '../../../core/services/task.service';
 import { Task } from '../../../model/task.model';
 
@@ -19,15 +22,30 @@ export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   searchTerm = '';
   selectedTasks = new Set<string>();
+  isLoading = false;
+  loadError = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit(): void {
-    this.loadTasks();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadTasks();
+    }
   }
 
   addTaskClicked(): void {
     this.addTask.emit();
+  }
+
+  logoutClicked(): void {
+    console.log('[TaskListComponent] Logout clicked. Clearing token and navigating to login.');
+    this.authService.logout();
+    void this.router.navigateByUrl('/login');
   }
 
   editTaskClicked(task: Task): void {
@@ -140,12 +158,19 @@ export class TaskListComponent implements OnInit {
   }
 
   loadTasks(): void {
+    this.isLoading = true;
+    this.loadError = '';
+
     this.taskService.getAllTasks().subscribe({
       next: (data: Task[]) => {
+        this.isLoading = false;
         this.tasks = data;
         // console.log('Tasks:', data);
       },
       error: (err: any) => {
+        this.isLoading = false;
+        this.tasks = [];
+        this.loadError = 'Unable to load tasks right now.';
         console.error('Error loading tasks', err);
       }
     });

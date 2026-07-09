@@ -90,6 +90,18 @@ input[type="checkbox"] {
 }
 
 .add-btn {
+
+.header-subtitle {
+  margin: 8px 0 0;
+  color: #5b6b7d;
+  font-size: 14px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
   background: #1976d2;
   color: white;
   border: none;
@@ -99,11 +111,33 @@ input[type="checkbox"] {
   font-size: 15px;
 }
 
+.logout-btn {
+  background: #243b53;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-right: 12px;
+}
+
 .table-card {
   background: white;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.empty-state {
+  padding: 28px 20px;
+  text-align: center;
+  color: #5b6b7d;
+  font-weight: 600;
+}
+
+.error-state {
+  color: #b42318;
 }
 
 table {
