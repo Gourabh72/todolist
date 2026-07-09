@@ -1,16 +1,1 @@
-<style>
-  @import './app.component.scss';
-</style>
-<app-task-list
-  *ngIf="!showTaskForm"
-  (addTask)="onAddTask()"
-  (editTask)="onEditTask($event)"
-  (completeTask)="onCompleteTask($event)"
-></app-task-list>
-
-<app-task-form
-  *ngIf="showTaskForm"
-  [task]="selectedTask"
-  (saved)="onTaskSaved()"
-  (cancel)="onTaskCanceled()"
-></app-task-form>
+<router-outlet></router-outlet>

@@ -3,10 +3,16 @@
 </style>
 <div class="task-container">
   <div class="header">
-    <h2>Task Manager</h2>
-    <button class="add-btn" (click)="addTaskClicked()">
-      + Add Task
-    </button>
+    <div>
+      <h2>Task Manager</h2>
+      <p class="header-subtitle">Manage your tasks and sign out when you're done.</p>
+    </div>
+    <div class="header-actions">
+      <button class="logout-btn" (click)="logoutClicked()">Logout</button>
+      <button class="add-btn" (click)="addTaskClicked()">
+        + Add Task
+      </button>
+    </div>
   </div>
 
   <div class="search-bar">
@@ -41,6 +47,18 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="isLoading">
+          <td colspan="7" class="empty-state">Loading tasks...</td>
+        </tr>
+
+        <tr *ngIf="!isLoading && loadError">
+          <td colspan="7" class="empty-state error-state">{{ loadError }}</td>
+        </tr>
+
+        <tr *ngIf="!isLoading && !loadError && tasks.length === 0">
+          <td colspan="7" class="empty-state">No tasks found.</td>
+        </tr>
+
         <tr *ngFor="let task of tasks">
           <td><input type="checkbox" [checked]="selectedTasks.has(task.id ?? '')" (change)="toggleTaskSelection(task)" /></td>
           <td>{{ task.title }}</td>
