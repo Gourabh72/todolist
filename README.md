@@ -1,59 +1,113 @@
-# TodoUi
+# ToDoList
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.27.
+A full-stack Todo List application with a Spring Boot REST API backend and an Angular web frontend. The app supports user registration/login with JWT-based authentication and full CRUD management of tasks.
 
-## Development server
+## Project Structure
 
-To start a local development server, run:
+This repository contains two independent projects:
+
+```
+todolist-web-rest/
+├── src/                    # Backend - Java Spring Boot REST API
+│   └── main/java/org/todolist/
+│       ├── config/         # Security & CORS configuration
+│       ├── controller/     # REST controllers (Auth, ToDoList)
+│       ├── dto/            # Request/response DTOs
+│       ├── exception/      # Global & custom exception handling
+│       ├── repository/     # Data access (repositories, DAOs, entities)
+│       ├── security/       # JWT authentication filter
+│       ├── service/        # Business logic & user details services
+│       └── utill/          # Utility classes (JWT, Excel export, etc.)
+├── todo-ui/                # Frontend - Angular application
+│   └── src/app/
+│       ├── core/           # Guards, interceptors, core services
+│       ├── features/
+│       │   ├── auth/       # Login component
+│       │   └── tasks/      # Task list, task form, task page
+│       └── model/          # TypeScript models & enums
+└── pom.xml                 # Maven build file for the backend
+```
+
+## Tech Stack
+
+**Backend**
+- Java, Spring Boot
+- Spring Security with JWT authentication
+- Maven
+
+**Frontend**
+- Angular
+- TypeScript
+- SCSS
+
+## Features
+
+- User registration and login secured with JWT
+- Create, view, update, and delete tasks
+- Task status and priority management
+- Route guards and HTTP interceptors on the frontend for authenticated requests
+- CORS-configured REST API for frontend-backend communication
+
+## Prerequisites
+
+- Java 17+ (or the version configured in `pom.xml`)
+- Maven 3.6+
+- Node.js 18+ and npm
+- Angular CLI (`npm install -g @angular/cli`)
+
+## Getting Started
+
+### 1. Clone the repository
 
 ```bash
+git clone https://github.com/Gourabh72/todolist.git
+cd todolist
+```
+
+### 2. Run the backend
+
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+The API will start on `http://localhost:8080` (default; check `application.yml`/`application.properties` for the configured port).
+
+### 3. Run the frontend
+
+```bash
+cd todo-ui
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The Angular app will be available at `http://localhost:4200`.
 
-## Code scaffolding
+## API Overview
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Endpoint              | Description                     |
+|------------------------|----------------------------------|
+| `POST /auth/register`  | Register a new user             |
+| `POST /auth/login`     | Authenticate and receive a JWT  |
+| `GET /tasks`           | Get all tasks for the user       |
+| `POST /tasks`          | Create a new task                |
+| `PUT /tasks/{id}`      | Update an existing task          |
+| `DELETE /tasks/{id}`   | Delete a task                    |
 
-```bash
-ng generate component component-name
-```
+*(Update this table to match your actual controller endpoints and request/response formats.)*
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Configuration
 
-```bash
-ng generate --help
-```
+Backend configuration (database connection, JWT secret, CORS origins, etc.) is managed in the Spring Boot application properties/YAML file. Update these values to match your local environment before running the project.
 
-## Building
+## Contributing
 
-To build the project run:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m "Add some feature"`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
-```bash
-ng build
-```
+## License
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project currently has no license specified.
