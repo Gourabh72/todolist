@@ -29,7 +29,7 @@
 //    }
 //
 //    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
+//    public SecurityFilterChain securityFi
 //
 //        http
 //            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
