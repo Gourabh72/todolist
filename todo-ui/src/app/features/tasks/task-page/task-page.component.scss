@@ -1,0 +1,10 @@
+.task-page {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+@media (max-width: 768px) {
+  .task-page {
+    padding: 16px;
+  }
+}

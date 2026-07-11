@@ -1,0 +1,86 @@
+<style>
+  @import './task-list.component.scss';
+</style>
+<div class="task-container">
+  <div class="header">
+    <div>
+      <h2>Task Manager</h2>
+      <p class="header-subtitle">Manage your tasks and sign out when you're done.</p>
+    </div>
+    <div class="header-actions">
+      <button class="logout-btn" (click)="logoutClicked()">Logout</button>
+      <button class="add-btn" (click)="addTaskClicked()">
+        + Add Task
+      </button>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search tasks..."
+      [value]="searchTerm"
+      (input)="searchTerm = $any($event.target).value"
+    />
+    <button class="search-btn" (click)="onSearch()">Search</button>
+    <button class="clear-btn" *ngIf="searchTerm" (click)="clearSearch()">Clear</button>
+  </div>
+
+  <div *ngIf="selectedTasks.size > 0" class="bulk-actions">
+    <span>{{ selectedTasks.size }} task(s) selected</span>
+    <button class="select-all-btn" *ngIf="selectedTasks.size < tasks.length" (click)="selectAll()">Select All</button>
+    <button class="delete-all-btn" (click)="deleteSelectedTasks()">Delete All</button>
+    <button class="clear-all-btn" (click)="clearAll()">Clear All</button>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="selectedTasks.size === tasks.length && tasks.length > 0" (change)="toggleSelectAll()" [indeterminate]="selectedTasks.size > 0 && selectedTasks.size < tasks.length" /></th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="isLoading">
+          <td colspan="7" class="empty-state">Loading tasks...</td>
+        </tr>
+
+        <tr *ngIf="!isLoading && loadError">
+          <td colspan="7" class="empty-state error-state">{{ loadError }}</td>
+        </tr>
+
+        <tr *ngIf="!isLoading && !loadError && tasks.length === 0">
+          <td colspan="7" class="empty-state">No tasks found.</td>
+        </tr>
+
+        <tr *ngFor="let task of tasks">
+          <td><input type="checkbox" [checked]="selectedTasks.has(task.id ?? '')" (change)="toggleTaskSelection(task)" /></td>
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>
+            <span class="status-badge pending">
+              {{ task.status }}
+            </span>
+          </td>
+          <td>
+            <span class="priority-badge high">
+              {{ task.priority }}
+            </span>
+          </td>
+          <td>{{ task.dueDate }}</td>
+          <td class="actions">
+            <button class="edit-btn" *ngIf="task.status !== 'COMPLETED'" (click)="editTaskClicked(task)">Edit</button>
+            <button class="delete-btn" (click)="deleteTaskClicked(task)">Delete</button>
+            <button class="complete-btn" *ngIf="task.status !== 'COMPLETED'" (click)="completeTaskClicked(task)">Complete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
