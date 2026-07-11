@@ -1,0 +1,38 @@
+<div class="login-shell">
+  <section class="login-card">
+    <div class="brand">
+      <span class="eyebrow">Todo Manager</span>
+      <h1>{{ isRegisterMode ? 'Create your account' : 'Sign in to continue' }}</h1>
+      <p>
+        {{ isRegisterMode ? 'Create a new account, receive a JWT, and open the task list.' : 'Use your API credentials to retrieve a JWT and open the task list.' }}
+      </p>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="submit()" class="login-form">
+      <label>
+        <span>Username</span>
+        <input type="text" formControlName="username" autocomplete="username" placeholder="Enter username" />
+      </label>
+
+      <label *ngIf="isRegisterMode">
+        <span>Email</span>
+        <input type="email" formControlName="email" autocomplete="email" placeholder="Enter email" />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input type="password" formControlName="password" autocomplete="current-password" placeholder="Enter password" />
+      </label>
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <button type="submit" [disabled]="authForm.invalid || isSubmitting">
+        {{ isSubmitting ? (isRegisterMode ? 'Creating account...' : 'Signing in...') : (isRegisterMode ? 'Register' : 'Login') }}
+      </button>
+
+      <button type="button" class="toggle-btn" (click)="toggleMode()">
+        {{ isRegisterMode ? 'Already have an account? Login' : 'Create a new account' }}
+      </button>
+    </form>
+  </section>
+</div>
